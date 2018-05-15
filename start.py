@@ -1,12 +1,12 @@
 import json
 
-my_json = '''
-[
-	{"title": "Title #1", "body": "Hello, World1!"},
+# my_json = '''
+# [
+# 	{"title": "Title #1", "body": "Hello, World1!"},
 
-	{"title": "Title #2", "body": "Hello, World 2!"}
-]
-'''
+# 	{"title": "Title #2", "body": "Hello, World 2!"}
+# ]
+# '''
 
 
 # my_json = '''
@@ -22,24 +22,15 @@ my_json = '''
 # '''
 
 
+# html = ''
+# parsed_string = json.loads(my_json)
+# for tag in parsed_string:	
+# 	for key, value in tag.items():
+# 		if key == 'title':
+# 			html += '<h1>' + value + '</h1>'
+# 		if key == 'body':
+# 			html += '<p>' + value + '</p>'
 
-
-
-
-
-
-#my_json = json.dumps(my_json)
-# print(my_json)
-
-a = ''
-parsed_string = json.loads(my_json)
-for tag in parsed_string:	
-	for key, value in tag.items():
-		if key == 'title':
-			a += '<h1>' + value + '</h1>'
-		if key == 'body':
-			a += '<p>' + value + '</p>'
-print(a)
 
 
 
@@ -58,8 +49,25 @@ print(a)
 #     json.dump(my_json, file)
 
 
+#22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
 
 
+my_json = '''
+		[
+			{
+			 "h3": "Title #1",
+			 "div": "Hello, World 1!"
+			}
+
+		]
+		'''
+my_json = json.loads(my_json)
+
+html = ''
+for set_tag in my_json:
+	for tag, value in set_tag.items():
+		html += "<{0}>{1}</{0}>".format(tag, value)
+print(html)
 
 
 
