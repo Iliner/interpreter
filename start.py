@@ -73,18 +73,46 @@ import json
 #3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
 
 
+# my_json = '''
+# 		[
+# 			{
+# 			"h3": "Title #1",
+# 			"div": "Hello, World 1!"
+# 			},
+# 			{
+# 			"h3": "Title #2",
+# 			"div": "Hello, World 2!"
+# 			}
+# 		]
+# 		'''
+# html = ""
+# my_json = json.loads(my_json)
+# json_type = type(my_json)
+# if json_type == list:
+# 	html += '<ul>'
+# 	for set_tag in my_json:
+# 		html += '<li>'
+# 		for tag, value in set_tag.items():
+# 			html += "<{0}>{1}</{0}>".format(tag, value)
+# 		html += '</li>'
+# 	html += '</ul>'
+# print(html)
+
+#44444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
 my_json = '''
-		[
-			{
-			"h3": "Title #1",
-			"div": "Hello, World 1!"
-			},
-			{
-			"h3": "Title #2",
-			"div": "Hello, World 2!"
-			}
-		]
-		'''
+			[
+				{
+				"span": "Title #1",
+				"content": [{
+							"p": "Example 1", 
+							"header": "header 1" 
+							}]
+				},
+				{"div": "div 1"}
+
+			]		
+		  '''
+
 html = ""
 my_json = json.loads(my_json)
 json_type = type(my_json)
@@ -93,7 +121,17 @@ if json_type == list:
 	for set_tag in my_json:
 		html += '<li>'
 		for tag, value in set_tag.items():
+			if type(value) == list: 
+				new_val = '<ul>'
+				for set_tag_2 in value:
+					new_val += '<li>'
+					for ke, val in set_tag_2.items():
+						new_val += "<{0}>{1}</{0}>".format(ke, val)
+					new_val += '</li>'
+				new_val += '</ul>'
+				value = new_val
 			html += "<{0}>{1}</{0}>".format(tag, value)
 		html += '</li>'
 	html += '</ul>'
+
 print(html)
