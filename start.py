@@ -99,39 +99,118 @@ import json
 # print(html)
 
 #44444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
-my_json = '''
-			[
-				{
-				"span": "Title #1",
-				"content": [{
-							"p": "Example 1", 
-							"header": "header 1" 
-							}]
-				},
-				{"div": "div 1"}
+# my_json = '''
+# 			[
+# 				{
+# 				"span": "Title #1",
+# 				"content": [{
+# 							"p": "Example 1", 
+# 							"header": "header 1" 
+# 							}]
+# 				},
+# 				{"div": "div 1"}
 
-			]		
-		  '''
+# 			]		
+# 		  '''
 
-html = ""
-my_json = json.loads(my_json)
-json_type = type(my_json)
-if json_type == list:
-	html += '<ul>'
-	for set_tag in my_json:
-		html += '<li>'
-		for tag, value in set_tag.items():
-			if type(value) == list: 
-				new_val = '<ul>'
-				for set_tag_2 in value:
-					new_val += '<li>'
-					for ke, val in set_tag_2.items():
-						new_val += "<{0}>{1}</{0}>".format(ke, val)
-					new_val += '</li>'
-				new_val += '</ul>'
-				value = new_val
-			html += "<{0}>{1}</{0}>".format(tag, value)
-		html += '</li>'
-	html += '</ul>'
 
-print(html)
+# html = ""
+# my_json = json.loads(my_json)
+# json_type = type(my_json)
+# if json_type == list:
+# 	html += '<ul>'
+# 	for set_tag in my_json:
+# 		html += '<li>'
+# 		for tag, value in set_tag.items():
+# 			if type(value) == list: 
+# 				new_val = '<ul>'
+# 				for set_tag_2 in value:
+# 					new_val += '<li>'
+# 					for ke, val in set_tag_2.items():
+# 						new_val += "<{0}>{1}</{0}>".format(ke, val)
+# 					new_val += '</li>'
+# 				new_val += '</ul>'
+# 				value = new_val
+# 			html += "<{0}>{1}</{0}>".format(tag, value)
+# 		html += '</li>'
+# 	html += '</ul>'
+
+
+
+# print(html)
+
+
+
+
+
+
+
+# class IvanJson:
+# 	def __init__(self, file):
+# 		with open(file) as file:
+# 			self.myjson = json.load(file)
+
+
+# 	def convert(self):
+
+
+
+
+
+# 	def __str__(self):
+# 		return self.myjson
+
+
+
+
+# first = IvanJson('source.json')
+# print(first)
+
+
+
+
+
+
+
+
+
+def main(file):
+	if type(file) == list:
+		html = first_lvl(file)
+		print(html)
+
+def first_lvl(file):
+	html = ""
+	json_type = type(file)
+	if json_type == list:
+		html += '<ul>'
+		for set_tag in file:
+			html += '<li>'
+			for tag, value in set_tag.items():
+				if type(value) == list: 
+					value = second_lvl(value)
+				html += "<{0}>{1}</{0}>".format(tag, value)
+			html += '</li>'
+		html += '</ul>'
+	return html
+
+def second_lvl(value):
+	new_val = '<ul>'
+	for set_tag_2 in value:
+		new_val += '<li>'
+		for ke, val in set_tag_2.items():
+			new_val += "<{0}>{1}</{0}>".format(ke, val)
+		new_val += '</li>'
+	new_val += '</ul>'
+	return new_val
+
+
+
+if __name__ == '__main__':
+	with open('source.json') as f:
+		file = json.load(f)
+		main(file)
+
+
+
+
