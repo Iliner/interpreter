@@ -88,10 +88,12 @@ my_json = '''
 html = ""
 my_json = json.loads(my_json)
 json_type = type(my_json)
-print(len(my_json))
-count = 0
 if json_type == list:
+	html += '<ul>'
 	for set_tag in my_json:
+		html += '<li>'
 		for tag, value in set_tag.items():
-			html += "<li><{0}>{1}</{0}></li>".format(tag, value)
+			html += "<{0}>{1}</{0}>".format(tag, value)
+		html += '</li>'
+	html += '</ul>'
 print(html)
