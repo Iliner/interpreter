@@ -189,7 +189,7 @@ def first_lvl(file):
 			for tag, value in set_tag.items():
 				if type(value) == list: 
 					value = second_lvl(value)
-				html += "<{0}>{1}</{0}>".format(tag, value)
+				html += input_in_format(tag, value)
 			html += '</li>'
 		html += '</ul>'
 	return html
@@ -199,10 +199,14 @@ def second_lvl(value):
 	for set_tag_2 in value:
 		new_val += '<li>'
 		for ke, val in set_tag_2.items():
-			new_val += "<{0}>{1}</{0}>".format(ke, val)
+			new_val += input_in_format(ke, val)
 		new_val += '</li>'
 	new_val += '</ul>'
 	return new_val
+
+def input_in_format(key, value):
+	tags = "<{0}>{1}</{0}>".format(key, value)
+	return tags
 
 
 
