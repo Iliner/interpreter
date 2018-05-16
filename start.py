@@ -20,7 +20,7 @@ import json
 # 		]
 # }
 # '''
-
+# my_json = [{"ivan": [{"first": "1"},{"second": '2'}]}]
 
 # html = ''
 # parsed_string = json.loads(my_json)
@@ -45,8 +45,8 @@ import json
 # 	my_kai = loads(file)
 
 
-# with open("my_json", "w", encoding="utf-8") as file:
-#     json.dump(my_json, file)
+# with open("my_json.json", "w", encoding="utf-8") as file:
+#     json.dump(my_json, file, indent=4)
 
 
 #22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
@@ -174,10 +174,8 @@ import json
 
 
 
-def main(file):
-	if type(file) == list:
-		html = first_lvl(file)
-		print(html)
+
+ 
 
 def first_lvl(file):
 	html = ""
@@ -194,6 +192,7 @@ def first_lvl(file):
 		html += '</ul>'
 	return html
 
+
 def second_lvl(value):
 	new_val = '<ul>'
 	for set_tag_2 in value:
@@ -208,6 +207,14 @@ def input_in_format(key, value):
 	tags = "<{0}>{1}</{0}>".format(key, value)
 	return tags
 
+
+
+def main(file):
+	if type(file) == list:
+		html = first_lvl(file)
+		print(html)
+	with open('myhtml.html', 'w', encoding='utf-8') as file:
+		file.write(html)
 
 
 if __name__ == '__main__':
