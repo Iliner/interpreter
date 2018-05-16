@@ -168,9 +168,12 @@ import json
 
 
 
-
-
-
+# my_json = '''
+# 			{
+# 				"p.my-class#my-id": "hello",
+# 				"p.my-class1.my-class2":"example<a>asd</a>"
+# 			}
+# 		  '''
 
 
 
@@ -178,18 +181,16 @@ import json
  
 
 def first_lvl(file):
-	html = ""
-	json_type = type(file)
-	if json_type == list:
-		html += '<ul>'
-		for set_tag in file:
-			html += '<li>'
-			for tag, value in set_tag.items():
-				if type(value) == list: 
-					value = second_lvl(value)
-				html += input_in_format(tag, value)
-			html += '</li>'
-		html += '</ul>'
+	html = '<ul>'
+	for set_tag in file:
+		html += '<li>'
+		for tag, value in set_tag.items():
+			print(tag)
+			if type(value) == list: 
+				value = second_lvl(value)
+			html += input_in_format(tag, value)
+		html += '</li>'
+	html += '</ul>'
 	return html
 
 
@@ -203,9 +204,20 @@ def second_lvl(value):
 	new_val += '</ul>'
 	return new_val
 
+
+
+
+
 def input_in_format(key, value):
 	tags = "<{0}>{1}</{0}>".format(key, value)
 	return tags
+
+
+def my_reg(some):
+	pass
+
+
+
 
 
 
@@ -213,6 +225,8 @@ def main(file):
 	if type(file) == list:
 		html = first_lvl(file)
 		print(html)
+	else:
+		print()
 	with open('myhtml.html', 'w', encoding='utf-8') as file:
 		file.write(html)
 
