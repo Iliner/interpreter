@@ -1,5 +1,5 @@
 import json
-
+import re
 # my_json = '''
 # [
 # 	{"title": "Title #1", "body": "Hello, World1!"},
@@ -168,73 +168,123 @@ import json
 
 
 
-# my_json = '''
-# 			{
-# 				"p.my-class#my-id": "hello",
-# 				"p.my-class1.my-class2":"example<a>asd</a>"
-# 			}
-# 		  '''
+
+
+# def edit_list(arg):
+# 	html = '<ul>'
+# 	for set_tag in arg:
+# 		html += '<li>'
+# 		for tag, value in set_tag.items():
+# 			if type(value) == list: 
+# 				value = edit_list(value)
+# 			html += input_in_format(tag, value)
+# 		html += '</li>'
+# 	html += '</ul>'
+# 	return html
 
 
 
 
+# def input_in_format(key, value):
+# 	tags = "<{0}>{1}</{0}>".format(key, value)
+# 	return tags
+
+
+
+# my_list = [{"span": "Title #1", "content": [{"p": "Example 1", "header": "header 1"}]}, {"div": "div 1"}]
+# print(edit_list(my_list))
+
+
+# def second_lvl(value):
+# 	new_val = '<ul>'
+# 	for set_tag_2 in value:
+# 		new_val += '<li>'
+# 		for ke, val in set_tag_2.items():
+# 			new_val += input_in_format(ke, val)
+# 		new_val += '</li>'
+# 	new_val += '</ul>'
+# 	return new_val
+
+
+
+
+##############################
  
 
-def first_lvl(file):
-	html = '<ul>'
-	for set_tag in file:
-		html += '<li>'
-		for tag, value in set_tag.items():
-			print(tag)
-			if type(value) == list: 
-				value = second_lvl(value)
-			html += input_in_format(tag, value)
-		html += '</li>'
-	html += '</ul>'
-	return html
+# def edit_list(file):
+# 	html = '<ul>'
+# 	for set_tag in file:
+# 		html += '<li>'
+# 		for tag, value in set_tag.items():
+# 			if type(value) == list: 
+# 				value = edit_list(value)
+# 			html += input_in_format(tag, value)
+# 		html += '</li>'
+# 	html += '</ul>'
+# 	return html
 
 
-def second_lvl(value):
-	new_val = '<ul>'
-	for set_tag_2 in value:
-		new_val += '<li>'
-		for ke, val in set_tag_2.items():
-			new_val += input_in_format(ke, val)
-		new_val += '</li>'
-	new_val += '</ul>'
-	return new_val
+# def edit_just(file):
+# 	html = ''
+# 	for tag, value in file.items():
+# 		html += input_in_format(tag, value)
+# 	return html
+
+
+# def input_in_format(key, value):
+# 	tags = "<{0}>{1}</{0}>".format(key, value)
+# 	return tags
+
+
+# def main(file):
+# 	if type(file) == list:
+# 		html = edit_list(file)
+# 	else:
+# 		html = edit_just(file)
+# 	print(html)	
+# 	with open('myhtml.html', 'w', encoding='utf-8') as file:
+# 		file.write(html)
+
+
+# if __name__ == '__main__':
+# 	with open('source.json') as f:
+# 		file = json.load(f)
+# 		main(file)
 
 
 
 
-
-def input_in_format(key, value):
-	tags = "<{0}>{1}</{0}>".format(key, value)
-	return tags
-
-
-def my_reg(some):
-	pass
-
-
-
-
+#print(re.findall(r'\.[^#]*\#', key))
+#r'\.[^#]*'
+my_json = '''
+			{
+				"p.my-class#my-id": "hello",
+				"p.my-class1.my-class2":"example<a>asd</a>",
+				"p":"example<a>asd</a>",
+				"p.my-class3.my-class4#my-id4":"example<a>asd</a>"
+			}
+		  '''
 
 
-def main(file):
-	if type(file) == list:
-		html = first_lvl(file)
-		print(html)
+my_json = json.loads(my_json)
+
+for key, value in my_json.items():
+	tag = '<'
+	if '#' in key and '.' in key:
+		tag += key.split('.')[0]
+		tag_class = re.findall(r'\.([^#]+)|#([^.]+)', key)[0][0]
+		tag_id = re.findall(r'\.([^#]+)|#([^.]+)', key)[1][1]
+		if '.' in tag_class:
+			tag_class = tag_class.replace('.', ' ')
+		tag_class = ' class="{}"'.format(tag_class)
+		tag += tag_class + ' id="%s">' % tag_id
 	else:
-		print()
-	with open('myhtml.html', 'w', encoding='utf-8') as file:
-		file.write(html)
+		tag += key.split('.')[0]
+		tag_atr = re.findall(r'\.([^#]+)|#([^.]+)', key)
+		print(tag_atr)
 
 
-if __name__ == '__main__':
-	with open('source.json') as f:
-		file = json.load(f)
-		main(file)
+	
 
 
 
