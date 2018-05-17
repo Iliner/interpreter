@@ -1,291 +1,88 @@
 import json
 import re
-# my_json = '''
-# [
-# 	{"title": "Title #1", "body": "Hello, World1!"},
 
-# 	{"title": "Title #2", "body": "Hello, World 2!"}
-# ]
-# '''
 
+def edit_list(file):
+	html = '<ul>'
+	for set_tag in file:
+		html += '<li>'
+		for tag, value in set_tag.items():
+			tag_with_attr, tag_out_attr = check_tag(tag)
+			if type(value) == list: 
+				value = edit_list(value)
+			html += input_in_format(tag_with_attr, value, tag_out_attr)
+		html += '</li>'
+	html += '</ul>'
+	return html
 
-# my_json = '''
 
-# {
-# 	"ivan":
-# 		[
-# 			{"title": "Title #1", "body": "Hello, World1!"},
+def edit_just(file):
+	html = ''
+	for tag, value in file.items():
+		tag_with_attr, tag_out_attr = check_tag(tag)
+		html += input_in_format(tag_with_attr, value, tag_out_attr)
+	return html
 
-# 			{"title": "Title #2", "body": "Hello, World 2!"}
-# 		]
-# }
-# '''
-# my_json = [{"ivan": [{"first": "1"},{"second": '2'}]}]
 
-# html = ''
-# parsed_string = json.loads(my_json)
-# for tag in parsed_string:	
-# 	for key, value in tag.items():
-# 		if key == 'title':
-# 			html += '<h1>' + value + '</h1>'
-# 		if key == 'body':
-# 			html += '<p>' + value + '</p>'
+def input_in_format(tag_with_atr, value, tag):
+	tags = "<{}>{}</{}>".format(tag_with_atr, value, tag)
+	return tags
 
 
 
-
-# new = json.dumps(parsed_string, indent=10)
-# print(new)
-
-
-
-
-
-# with open('ivan.json') as file:
-# 	my_kai = loads(file)
-
-
-# with open("my_json.json", "w", encoding="utf-8") as file:
-#     json.dump(my_json, file, indent=4)
-
-
-#22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
-
-
-# my_json = '''
-# 		[
-# 			{
-# 			 "h3": "Title #1",
-# 			 "div": "Hello, World 1!"
-# 			}
-
-# 		]
-# 		'''
-# my_json = json.loads(my_json)
-
-# html = ''
-# for set_tag in my_json:
-# 	for tag, value in set_tag.items():
-# 		html += "<{0}>{1}</{0}>".format(tag, value)
-# print(html)
-
-
-#3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
-
-
-# my_json = '''
-# 		[
-# 			{
-# 			"h3": "Title #1",
-# 			"div": "Hello, World 1!"
-# 			},
-# 			{
-# 			"h3": "Title #2",
-# 			"div": "Hello, World 2!"
-# 			}
-# 		]
-# 		'''
-# html = ""
-# my_json = json.loads(my_json)
-# json_type = type(my_json)
-# if json_type == list:
-# 	html += '<ul>'
-# 	for set_tag in my_json:
-# 		html += '<li>'
-# 		for tag, value in set_tag.items():
-# 			html += "<{0}>{1}</{0}>".format(tag, value)
-# 		html += '</li>'
-# 	html += '</ul>'
-# print(html)
-
-#44444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
-# my_json = '''
-# 			[
-# 				{
-# 				"span": "Title #1",
-# 				"content": [{
-# 							"p": "Example 1", 
-# 							"header": "header 1" 
-# 							}]
-# 				},
-# 				{"div": "div 1"}
-
-# 			]		
-# 		  '''
-
-
-# html = ""
-# my_json = json.loads(my_json)
-# json_type = type(my_json)
-# if json_type == list:
-# 	html += '<ul>'
-# 	for set_tag in my_json:
-# 		html += '<li>'
-# 		for tag, value in set_tag.items():
-# 			if type(value) == list: 
-# 				new_val = '<ul>'
-# 				for set_tag_2 in value:
-# 					new_val += '<li>'
-# 					for ke, val in set_tag_2.items():
-# 						new_val += "<{0}>{1}</{0}>".format(ke, val)
-# 					new_val += '</li>'
-# 				new_val += '</ul>'
-# 				value = new_val
-# 			html += "<{0}>{1}</{0}>".format(tag, value)
-# 		html += '</li>'
-# 	html += '</ul>'
-
-
-
-# print(html)
-
-
-
-
-
-
-
-# class IvanJson:
-# 	def __init__(self, file):
-# 		with open(file) as file:
-# 			self.myjson = json.load(file)
-
-
-# 	def convert(self):
-
-
-
-
-
-# 	def __str__(self):
-# 		return self.myjson
-
-
-
-
-# first = IvanJson('source.json')
-# print(first)
-
-
-
-
-
-# def edit_list(arg):
-# 	html = '<ul>'
-# 	for set_tag in arg:
-# 		html += '<li>'
-# 		for tag, value in set_tag.items():
-# 			if type(value) == list: 
-# 				value = edit_list(value)
-# 			html += input_in_format(tag, value)
-# 		html += '</li>'
-# 	html += '</ul>'
-# 	return html
-
-
-
-
-# def input_in_format(key, value):
-# 	tags = "<{0}>{1}</{0}>".format(key, value)
-# 	return tags
-
-
-
-# my_list = [{"span": "Title #1", "content": [{"p": "Example 1", "header": "header 1"}]}, {"div": "div 1"}]
-# print(edit_list(my_list))
-
-
-# def second_lvl(value):
-# 	new_val = '<ul>'
-# 	for set_tag_2 in value:
-# 		new_val += '<li>'
-# 		for ke, val in set_tag_2.items():
-# 			new_val += input_in_format(ke, val)
-# 		new_val += '</li>'
-# 	new_val += '</ul>'
-# 	return new_val
-
-
-
-
-##############################
- 
-
-# def edit_list(file):
-# 	html = '<ul>'
-# 	for set_tag in file:
-# 		html += '<li>'
-# 		for tag, value in set_tag.items():
-# 			if type(value) == list: 
-# 				value = edit_list(value)
-# 			html += input_in_format(tag, value)
-# 		html += '</li>'
-# 	html += '</ul>'
-# 	return html
-
-
-# def edit_just(file):
-# 	html = ''
-# 	for tag, value in file.items():
-# 		html += input_in_format(tag, value)
-# 	return html
-
-
-# def input_in_format(key, value):
-# 	tags = "<{0}>{1}</{0}>".format(key, value)
-# 	return tags
-
-
-# def main(file):
-# 	if type(file) == list:
-# 		html = edit_list(file)
-# 	else:
-# 		html = edit_just(file)
-# 	print(html)	
-# 	with open('myhtml.html', 'w', encoding='utf-8') as file:
-# 		file.write(html)
-
-
-# if __name__ == '__main__':
-# 	with open('source.json') as f:
-# 		file = json.load(f)
-# 		main(file)
-
-
-
-
-#print(re.findall(r'\.[^#]*\#', key))
-#r'\.[^#]*'
-my_json = '''
-			{
-				"p.my-class#my-id": "hello",
-				"p.my-class1.my-class2":"example<a>asd</a>",
-				"p":"example<a>asd</a>",
-				"p.my-class3.my-class4#my-id4":"example<a>asd</a>"
-			}
-		  '''
-
-
-my_json = json.loads(my_json)
-
-for key, value in my_json.items():
-	tag = '<'
+def check_tag(key):
+	tag = ''
+	clear_tag = ''
 	if '#' in key and '.' in key:
 		tag += key.split('.')[0]
+		clear_tag = tag
 		tag_class = re.findall(r'\.([^#]+)|#([^.]+)', key)[0][0]
 		tag_id = re.findall(r'\.([^#]+)|#([^.]+)', key)[1][1]
 		if '.' in tag_class:
 			tag_class = tag_class.replace('.', ' ')
 		tag_class = ' class="{}"'.format(tag_class)
-		tag += tag_class + ' id="%s">' % tag_id
-	else:
+		tag += tag_class + ' id="%s"' % tag_id
+	elif '.' in key:
 		tag += key.split('.')[0]
-		tag_atr = re.findall(r'\.([^#]+)|#([^.]+)', key)
-		print(tag_atr)
+		clear_tag = tag
+		tag_class = re.findall(r'\.([^#]+)', key)[0]
+		tag_class = tag_class.replace('.', ' ')
+		tag_class = ' class="{}"'.format(tag_class)
+		tag += tag_class 
+	elif '#' in key:
+		try:
+			tag += key.split('#')[0]
+			clear_tag = tag
+			tag_id = re.findall(r'#([^.]+)', key)[0]
+			if '#' in tag_id:
+				raise KeyError
+			tag += 'id="%s"' % tag_id
+		except KeyError as e:
+			print('Ошибка с id, не может быть 2 id у одного тега: %s' % tag_id)
+		else:
+			print(tag)
+		finally:
+			pass
+	else:
+		tag = key
+		clear_tag = key		
+	return [tag, clear_tag]
 
 
-	
+def main(file):
+	if type(file) == list:
+		html = edit_list(file)
+	else:
+		html = edit_just(file)
+	print(html)	
+	with open('myhtml.html', 'w', encoding='utf-8') as file:
+		file.write(html)
 
 
+
+if __name__ == '__main__':
+	with open('source.json') as f:
+		file = json.load(f)
+		main(file)
 
 
