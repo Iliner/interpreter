@@ -3,6 +3,12 @@ import re
 
 
 def edit_list(file):
+	"""
+	Если наш json содержит тип list
+	то мы оборачиваем эти элименты в
+	в ul, а конкретный каждый элемент
+	в тег  il
+	"""
 	html = '<ul>'
 	for set_tag in file:
 		html += '<li>'
@@ -31,6 +37,11 @@ def input_in_format(tag_with_atr, value, tag):
 
 
 def check_tag(key):
+	""" 
+	Сдесь идет проверка тегов. Если у них присуствует 
+	специальные атрибуты в силе ссs то эта функция 
+	привидет атрибуты к стилю html 
+	"""
 	tag = ''
 	clear_tag = ''
 	if '#' in key and '.' in key:
@@ -56,11 +67,12 @@ def check_tag(key):
 			tag_id = re.findall(r'#([^.]+)', key)[0]
 			if '#' in tag_id:
 				raise KeyError
-			tag += 'id="%s"' % tag_id
+			tag += ' id="%s"' % tag_id
 		except KeyError as e:
-			print('Ошибка с id, не может быть 2 id у одного тега: %s' % tag_id)
+			print('Ошибка с id, не может быть 2 id у одного тега: %s' % key)
+			return 'Error with attr of tag'
 		else:
-			print(tag)
+			pass
 		finally:
 			pass
 	else:
@@ -70,6 +82,9 @@ def check_tag(key):
 
 
 def main(file):
+	"""
+	Функция контроля
+	"""
 	if type(file) == list:
 		html = edit_list(file)
 	else:
